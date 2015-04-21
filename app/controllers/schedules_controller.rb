@@ -1,16 +1,19 @@
 class SchedulesController < ApplicationController
   def new
-	@userID = params[:userID]
 	@schedule = Schedule.new
   end
   def index
 	@userID = params[:userID]
 	@schedule = Schedule.where(:userID => params[:userID])
+	respond_to do|format|
+		format.html
+		format.json{render :json => @schedule.to_json}
+		format.xml{render :xml => @schedule.to_xml}
+	end
   end
   
   def create
 	@schedule = Schedule.new(post_params)
-	@schedule.userID = params[:userID]
 	if @schedule.save
 		redirect_to schedules_index_path(:userID => @schedule.userID), notice => "saved"
 	else
@@ -22,7 +25,7 @@ class SchedulesController < ApplicationController
 
   def delete
 	if Schedule.destroy(params[:id])
-			redirect_to schedules_path, :notice => "saved"
+			redirect_to schedules_index_path, :notice => "saved"
 		else
 			render "Show"
 		end
@@ -32,13 +35,8 @@ class SchedulesController < ApplicationController
 	@schedule = Schedule.find(params[:id])
   end
   
-  def json
-	@schedule = Schedule.where(:userID => params[:userID])
-    render json: @schedule
-  end
-  
   private
     def post_params
-        params.require(:schedule).permit(:date, :title, :category, :note, :star)
+        params.require(:schedule).permit(:date, :title, :category, :note, :star, :userID)
     end
 end

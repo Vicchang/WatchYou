@@ -1,5 +1,5 @@
 <h1>New Schedule</h1>
-<%= form_for @schedule, url: {action: "create",controller: "schedules", userID: @userID} do |f| %>
+<%= form_for @schedule, url: {action: "create",controller: "schedules"} do |f| %>
 	<p>
 		<%=f.label :title %><br />
 		<%=f.text_field :title %><br />
@@ -16,13 +16,15 @@
 		<%=f.label :star %><br />
 		<%=f.text_field :star %><br />
 	</p>
-		<p>
+	<p>
 		<%=f.label :note %><br />
 		<%=f.text_field :note %><br />
 	</p>
-	
+	<p>
+		<%=f.text_field :userID, :value => params[:userID] %><br />
+	</p>
 	<p>
 		<%= f.submit "Add Schedule" %>
 	</p>
 <% end %>
-<%= link_to "Go Back", schedules_index_path(:userID => @userID) %>
+<%= link_to "Go Back", schedules_index_path %>

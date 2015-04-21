@@ -6,21 +6,23 @@ Rails.application.routes.draw do
   #get 'schedules/delete'
   resource 'users'
   
-  resource 'schedules'
+  # resource 'schedules'
   
-  get 'schedules/index'
+  get 'schedules/index/:userID' => 'schedules#index' , as: 'schedules_index'
   
-  get 'schedules/delete'
+  get 'schedules/:userID/show/:id' => 'schedules#show'
   
-  get 'schedules/json'
+  get 'schedules/delete/:userID/:id' => 'schedules#delete'
+  
+  get 'schedules/:userID/new' => 'schedules#new', as: 'new_schedules' #第一個是網址 第二個是指向的VIEW 第三個是PATH NAME
+  
+  post 'schedules/create'
   
   get 'users/index'
 
   get 'users/new'
 
   get 'users/update'
-
-  get 'users/json'
   
   get 'users/delete'
   
