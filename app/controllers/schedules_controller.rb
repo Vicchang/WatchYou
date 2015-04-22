@@ -15,11 +15,17 @@ class SchedulesController < ApplicationController
   
   def create
 	@schedule = Schedule.new(post_params)
-	if @schedule.save
-		redirect_to schedules_index_path(:userID => @schedule.userID), notice => "saved"
-	else
-		render "new"
+
+	respond_to do |format|
+		if @schedule.save
+			format.html{ render json: @schedule, notice => "saved"}
+			format.json{ render json: @schedule, status: :created}
+		else
+			format.html{ render action: "new"}
+			format.json{ render json: @schedule.errors, status: :unprocessable_entity}
+		end
 	end
+	
   end
   def update
   end

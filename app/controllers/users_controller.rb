@@ -20,7 +20,7 @@ class UsersController < ApplicationController
 	
 	respond_to do |format|
 		if @user.save
-			format.html{ redirect_to users_index_path, notice => "saved"}
+			format.html{ render json: @user, notice => "saved"}
 			format.json{ render json: @user, status: :created}
 		else
 			format.html{ render action: "new"}
