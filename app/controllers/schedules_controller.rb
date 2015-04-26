@@ -1,5 +1,5 @@
 class SchedulesController < ApplicationController
-  skip_before_filter  :verify_authenticity_token, :only =>[:create]
+  skip_before_filter  :verify_authenticity_token, :only =>[:create, :destroy]
   def new
 	@schedule = Schedule.new
   end
@@ -30,12 +30,15 @@ class SchedulesController < ApplicationController
   def update
   end
 
-  def delete
+  def destroy
+	@userID = Schedule.find(params[:id]).userID
+	@schedule = Schedule.where(:userID => @userID)
 	if Schedule.destroy(params[:id])
-			redirect_to schedules_index_path, :notice => "saved"
-		else
-			render "Show"
-		end
+			render json: @schedule, notice => "save"
+			#redirect_to schedules_index_path(:userID => @userID), :notice => "saved"
+	else
+			render "show"
+	end
   end
   
   def show

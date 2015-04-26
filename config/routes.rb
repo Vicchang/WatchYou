@@ -4,7 +4,15 @@ Rails.application.routes.draw do
   #get 'schedules/update'
 
   #get 'schedules/delete'
+  # delete '/users/delete/:id', to: 'users#destroy', as: 'delete_users'
+  
+  get '/users' , to: 'users#index'
+  
   resource 'users'
+ 
+  get '/users/:id', to: 'users#show' 
+  
+  get '/users/edit/:id', to: 'users#edit'
   
   # resource 'schedules'
   
@@ -12,23 +20,13 @@ Rails.application.routes.draw do
   
   get 'schedules/:userID/show/:id' => 'schedules#show'
   
-  get 'schedules/delete/:userID/:id' => 'schedules#delete'
+  delete 'schedules/delete/:userID/:id' => 'schedules#destroy'
   
   get 'schedules/:userID/new' => 'schedules#new', as: 'new_schedules' #第一個是網址 第二個是指向的VIEW 第三個是PATH NAME
   
   post 'schedules/create'
   
-  get 'users/index'
 
-  get 'users/new'
-
-  get 'users/update'
-  
-  get 'users/delete'
-  
-  get '/users' , to: 'users#index'
-  
-  get '/users/:id', to: 'users#show' 
   
 
   #resource 'schedules'

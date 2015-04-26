@@ -3,5 +3,9 @@
 	<h3><%= link_to user.name, controller: "users", action: "show", id: user.id %></h3>
 	<hr>
 <% end %>
-<h3><%= link_to "New", users_new_path %></h3>
+<h3><%= link_to "New", new_users_path %></h3>
 <hr>
+
+<pre>
+  <%= @user.inspect %>
+</pre>

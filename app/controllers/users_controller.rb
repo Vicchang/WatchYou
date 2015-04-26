@@ -29,23 +29,34 @@ class UsersController < ApplicationController
 	end
   end
 	
+  # PATCH
+	
   def update
-		@user = User.find(params[:id])
-		
+	@user = current_user
+	respond_to do |format|	
 		if @user.update_attributes(post_params)
-			redirect_to user_path, :notice => "saved"
+			format.html{redirect_to user_path, :notice => "saved"}
+			format.json{ render json: @user, status: :created}
 		else
-			render "Edit"
+			format.html{ render action: "edit"}
+			format.json{ render json: @user.errors, stutus: :unprocessable_entity}
 		end
+	end
   end
-
-  def delete
-		@schedule = Schedule.where(:userID => params[:id])
-		if @schedule.destroy_all && User.destroy(params[:id])
-			redirect_to users_index_path, :notice => "saved"
-		else
-			render "show"
-		end
+  
+  def edit
+		@user = User.find(params[:id])	
+  end
+  
+  
+  def destroy
+	@schedule = Schedule.where(:userID => params[:id])
+		
+    if @schedule.destroy_all && User.destroy(params[:id])
+		redirect_to users_path, :notice => "saved"
+	else
+		render "index"
+	end
   end
   
   def show
