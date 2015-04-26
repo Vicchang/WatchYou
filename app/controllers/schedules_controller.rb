@@ -47,6 +47,6 @@ class SchedulesController < ApplicationController
   
   private
     def post_params
-        params.require(:schedule).permit(:date, :title, :category, :note, :star, :userID)
+        params.require(:schedule).permit(:year, :month, :day, :remind_date, :remind_time, :ring, :sumbit, :accept, :image, :title, :category, :note, :star, :userID)
     end
 end
